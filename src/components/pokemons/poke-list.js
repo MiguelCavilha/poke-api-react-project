@@ -23,8 +23,8 @@ function PokemonList() {
           const details = await getPokemon(pokemon.name);
           const sprite = await getPokemonSprite(pokemon.name);
           const types = details.types.map(type => type.type.name);
-          return{...details, sprite, types, color:typeColors[types[0 && 1]],};
-          
+          return { ...details, sprite, types, color: typeColors[types[0 && 1]], };
+
         })
       ))
       .then(data => setPokemons(data));
@@ -42,11 +42,11 @@ function PokemonList() {
 
 
   return (
-    <Div style={{ color: theme.color, backgroundColor: theme.background  }}>
+    <Div style={{ color: theme.color, backgroundColor: theme.background }}>
       <H1>Pokedex</H1>
       <Ol>
         {pokemons.map(({ name, sprite, types, color }) => (
-          <Li key={name} style={{backgroundColor: color, background: `linear-gradient(to-bottom)`}}>
+          <Li key={name} style={{ backgroundColor: color, background: `linear-gradient(to-bottom)` }}>
             {Link ? <Link style={{ color: 'inherit', textDecoration: 'inherit' }} to={`/pokemon/${name}`}>
               <Img src={sprite} alt='{name}' />
               <H2>{name}</H2>
@@ -66,7 +66,6 @@ const Div = styled.div`
          display: flex;
          flex-direction: column;
          align-items: center;
-         padding: 5rem;
          background: url(${backgroundImage});
          background-size: 70px;
          
@@ -80,10 +79,12 @@ const H1 = styled.h1`
          margin-left: 3rem;
          text-align: center;
          text-shadow: 2px 2px #1f57b5;
-         font-size: 3rem;
+         font-size: 5rem;
          color: #ffd203;
         -webkit-text-stroke-width: 3px; 
         -webkit-text-stroke-color: #1f57b5; 
+        font-family: 'Pokemon Solid', sans-serif;
+        letter-spacing: 5px;
 
 `
 
@@ -93,6 +94,8 @@ const H2 = styled.h2`
          font-size: 1.2rem;
          text-transform: capitalize;
          margin-bottom: 0.2rem;
+         font-family: 'Pokemon Solid', sans-serif;
+         letter-spacing: 3px;
 
 
 `
@@ -104,7 +107,7 @@ const Ol = styled.ol`
          display: grid;
          grid-template-columns: repeat(3, 1fr);
          grid-gap: 100px;
-         list-style-type: none;
+       
                   
 `
 
@@ -137,14 +140,18 @@ const Li = styled.li`
 
 const Img = styled.img`
 
-         width: 100px;
-         margin-top: 4rem;
+         width: 80px;
+         margin-top: 3rem;
          position: relative
 
 `
 const P = styled.p`
         
         text-transform: capitalize;
+        font-family: 'Pokemon Hollow', sans-serif;
+        letter-spacing: 3px;
+
+                
 
 `
 
