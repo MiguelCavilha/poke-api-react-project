@@ -79,7 +79,7 @@ const Div = styled.div`
           flex-direction: column;
           align-items: center;
         }
-        @media (max-width: 425px) {
+        @media (max-width: 460px) {
           flex-direction: column;
           align-items: center;
           background-size: 50px
@@ -112,7 +112,7 @@ const H1 = styled.h1`
         @media (max-width: 768px) {
           font-size: 5rem;
         }
-        @media (max-width: 425px) {
+        @media (max-width: 460px) {
           font-size: 4rem;
         }
 
@@ -131,7 +131,7 @@ const H2 = styled.h2`
          font-family: 'Pokemon Solid', sans-serif;
          letter-spacing: 3px;
 
-         @media (max-width: 425px) {
+         @media (max-width: 460px) {
           font-size: 0.8rem
         }
 
@@ -157,7 +157,7 @@ const Ol = styled.ol`
          @media (max-width: 768px) {
           grid-template-columns: repeat(2, 1fr);
         }
-        @media (max-width: 425px) {
+        @media (max-width: 460px) {
           grid-template-columns: repeat(1, 1fr);
         }
 
@@ -193,7 +193,7 @@ const Li = styled.li`
          0 32.8px 32.8px rgba(0, 0, 0, 0.067),
          0 71px 71px rgba(0, 0, 0, 0.09);
 
-         @media (max-width: 425px) {
+         @media (max-width: 460px) {
           min-width: 160px;
           height: 225px;
           text-align: center;
@@ -213,7 +213,7 @@ const Img = styled.img`
          margin-top: 3rem;
          position: relative
          
-         @media (max-width: 425px) {
+         @media (max-width: 460px) {
           width: 60px;
         }
 
@@ -229,7 +229,7 @@ const P = styled.p`
         letter-spacing: 3px;
 
 
-        @media (max-width: 425px) {
+        @media (max-width: 460px) {
           font-size: 0.8rem
         }
 
