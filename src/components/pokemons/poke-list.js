@@ -68,6 +68,28 @@ const Div = styled.div`
          align-items: center;
          background: url(${backgroundImage});
          background-size: 70px;
+
+
+         @media (max-width: 1024px) {
+          flex-direction: column;
+          align-items: center;
+        }
+
+         @media (max-width: 768px) {
+          flex-direction: column;
+          align-items: center;
+        }
+        @media (max-width: 425px) {
+          flex-direction: column;
+          align-items: center;
+          background-size: 50px
+        }
+
+        @media (max-width: 375px) {
+          flex-direction: column;
+          align-items: center;
+          background-size:40px
+        }
          
 
 `
@@ -86,6 +108,18 @@ const H1 = styled.h1`
         font-family: 'Pokemon Solid', sans-serif;
         letter-spacing: 5px;
 
+
+        @media (max-width: 768px) {
+          font-size: 5rem;
+        }
+        @media (max-width: 425px) {
+          font-size: 4rem;
+        }
+
+        @media (max-width: 375px) {
+          font-size: 3rem;
+        }
+
 `
 
 
@@ -97,6 +131,14 @@ const H2 = styled.h2`
          font-family: 'Pokemon Solid', sans-serif;
          letter-spacing: 3px;
 
+         @media (max-width: 425px) {
+          font-size: 0.8rem
+        }
+
+        @media (max-width: 375px) {
+          font-size: 0.8rem
+        }
+
 
 `
 
@@ -107,6 +149,21 @@ const Ol = styled.ol`
          display: grid;
          grid-template-columns: repeat(3, 1fr);
          grid-gap: 100px;
+
+
+         @media (max-width: 1024px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+         @media (max-width: 768px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @media (max-width: 425px) {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        @media (max-width: 375px) {
+          grid-template-columns: repeat(1, 1fr);
+        }
        
                   
 `
@@ -136,6 +193,18 @@ const Li = styled.li`
          0 32.8px 32.8px rgba(0, 0, 0, 0.067),
          0 71px 71px rgba(0, 0, 0, 0.09);
 
+         @media (max-width: 425px) {
+          min-width: 160px;
+          height: 225px;
+          text-align: center;
+        }
+
+        @media (max-width: 375px) {
+          min-width: 160px;
+          height: 225px;
+          text-align: center;
+        }
+
 `
 
 const Img = styled.img`
@@ -143,6 +212,14 @@ const Img = styled.img`
          width: 80px;
          margin-top: 3rem;
          position: relative
+         
+         @media (max-width: 425px) {
+          width: 60px;
+        }
+
+        @media (max-width: 375px) {
+          width: 60px;
+        }
 
 `
 const P = styled.p`
@@ -151,6 +228,14 @@ const P = styled.p`
         font-family: 'Pokemon Hollow', sans-serif;
         letter-spacing: 3px;
 
+
+        @media (max-width: 425px) {
+          font-size: 0.8rem
+        }
+
+        @media (max-width: 375px) {
+          font-size: 0.8rem
+        }
                 
 
 `
