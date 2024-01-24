@@ -55,7 +55,7 @@ function PokemonList() {
           </Li>
         ))}
       </Ol>
-      <button onClick={loadMore}>Load More</button>
+      <Button onClick={loadMore}>Load More</Button>
     </Div>
   )
 
@@ -225,7 +225,7 @@ const Img = styled.img`
 const P = styled.p`
         
         text-transform: capitalize;
-        font-family: 'Pokemon Hollow', sans-serif;
+        font-family: 'Pokemon Solid', sans-serif;
         letter-spacing: 3px;
 
 
@@ -239,6 +239,29 @@ const P = styled.p`
                 
 
 `
+
+const Button = styled.button`
+width: 90px;
+height: 90px;
+display:inline-block;
+margin:20px;
+position: relative;
+color: #fff;
+border: 6px solid #ccc;
+border-radius: 50%;
+background-image: -moz-radial-gradient(40% 40%,circle,rgba(0,0,0,.1) 40%,rgba(0,0,0,1) 100%), -moz-linear-gradient(-90deg, #f33 45%, #333 45%, #3f3f3f 50%, #333 55%, #FFF 55%);
+background-image: -webkit-radial-gradient(40% 40%,circle,rgba(0,0,0,.1) 40%,rgba(0,0,0,1) 100%),-webkit-linear-gradient(-90deg, #f33 45%, #333 35%, #3f3f3f 60%, #333 55%, #FFF 55%);
+}
+
+@media (max-width: 460px) {
+  width: 50px;
+height: 50px;
+
+@media (max-width: 375px) {
+  width: 50px;
+height: 50px;
+  
+ `
 
 
 export { PokemonList }
