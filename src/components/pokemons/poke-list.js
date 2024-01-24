@@ -43,7 +43,7 @@ function PokemonList() {
 
   return (
     <Div style={{ color: theme.color, backgroundColor: theme.background }}>
-      <H1>Pokedex</H1>
+      <H1>PokéDex</H1>
       <Ol>
         {pokemons.map(({ name, sprite, types, color }) => (
           <Li key={name} style={{ backgroundColor: color, background: `linear-gradient(to-bottom)` }}>
