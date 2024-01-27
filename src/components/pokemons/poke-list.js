@@ -23,7 +23,7 @@ function PokemonList() {
           const details = await getPokemon(pokemon.name);
           const sprite = await getPokemonSprite(pokemon.name);
           const types = details.types.map(type => type.type.name);
-          return { ...details, sprite, types, color: typeColors[types[0 && 1]], };
+          return { ...details, sprite, types, color: typeColors[types[0]], };
 
         })
       ))
@@ -46,7 +46,7 @@ function PokemonList() {
       <H1>PokéDex</H1>
       <Ol>
         {pokemons.map(({ name, sprite, types, color }) => (
-          <Li key={name} style={{ backgroundColor: color, background: `linear-gradient(to-bottom)` }}>
+          <Li key={name} style={{ backgroundColor: color }}>
             {Link ? <Link style={{ color: 'inherit', textDecoration: 'inherit' }} to={`/pokemon/${name}`}>
               <Img src={sprite} alt='{name}' />
               <H2>{name}</H2>
@@ -79,7 +79,7 @@ const Div = styled.div`
           flex-direction: column;
           align-items: center;
         }
-        @media (max-width: 460px) {
+        @media (max-width: 470px) {
           flex-direction: column;
           align-items: center;
           background-size: 50px
@@ -112,11 +112,13 @@ const H1 = styled.h1`
         @media (max-width: 768px) {
           font-size: 5rem;
         }
-        @media (max-width: 460px) {
+        @media (max-width: 470px) {
+          margin-right: 3rem;
           font-size: 4rem;
         }
 
         @media (max-width: 375px) {
+          margin-right: 3rem;
           font-size: 3rem;
         }
 
@@ -131,7 +133,7 @@ const H2 = styled.h2`
          font-family: 'Pokemon Solid', sans-serif;
          letter-spacing: 3px;
 
-         @media (max-width: 460px) {
+         @media (max-width: 470px) {
           font-size: 0.8rem
         }
 
@@ -157,7 +159,7 @@ const Ol = styled.ol`
          @media (max-width: 768px) {
           grid-template-columns: repeat(2, 1fr);
         }
-        @media (max-width: 460px) {
+        @media (max-width: 470px) {
           grid-template-columns: repeat(1, 1fr);
         }
 
@@ -174,7 +176,7 @@ const Li = styled.li`
          align-items: center;
          justify-content: center;
          padding: 1.5rem 0;
-         margin: 2rem;
+         margin-right: 2rem;
 
     
 
@@ -193,14 +195,16 @@ const Li = styled.li`
          0 32.8px 32.8px rgba(0, 0, 0, 0.067),
          0 71px 71px rgba(0, 0, 0, 0.09);
 
-         @media (max-width: 460px) {
-          min-width: 160px;
+
+         @media (max-width: 470px) {
+          margin-right: 5rem;
+          min-width: 180px;
           height: 225px;
           text-align: center;
         }
 
         @media (max-width: 375px) {
-          min-width: 160px;
+          min-width: 180px;
           height: 225px;
           text-align: center;
         }

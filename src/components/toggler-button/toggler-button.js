@@ -1,6 +1,7 @@
 import { ButtonToggle } from "../button/button";
 import { ThemeContext, themes } from "../../contexts/toggler";
 import React, {useContext} from "react";
+import { styled } from 'styled-components';
 
 
 
@@ -9,11 +10,15 @@ export const ThemeTogglerButton = () => {
     const {theme, setTheme} = useContext(ThemeContext);
 
     return  (
-        <div>
+        <Div>
 
             <ButtonToggle onClick={() => setTheme(theme === themes.light ? themes.dark : themes.light)}> Toggle Theme </ButtonToggle>
  
-        </div>
+        </Div>
         )
 }
 
+const Div = styled.div`
+          width: 100px
+
+`
