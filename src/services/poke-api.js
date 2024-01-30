@@ -25,11 +25,6 @@ export async function getPokemonList(limit) {
     return res.data.results;
   }
   
-  export async function getPokemonDetails(name) {
-    const res = await pokeApi.get(`/pokemon/${name}`);
-    return res.data; 
-  }
-  
 
 
   export async function getPokemonAbilities(name) {
