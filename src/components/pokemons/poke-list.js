@@ -66,6 +66,7 @@ const Div = styled.div`
          display: flex;
          flex-direction: column;
          align-items: center;
+         justify-content: center;
          background: url(${backgroundImage});
          background-size: 70px;
 
@@ -161,10 +162,14 @@ const Ol = styled.ol`
         }
         @media (max-width: 470px) {
           grid-template-columns: repeat(1, 1fr);
+          grid-gap: 50px;
+          margin-left: 3rem;
         }
 
         @media (max-width: 375px) {
           grid-template-columns: repeat(1, 1fr);
+          grid-gap: 30px;
+          margin-left: 3rem;
         }
        
                   

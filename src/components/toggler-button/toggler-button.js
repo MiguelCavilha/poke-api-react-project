@@ -19,6 +19,11 @@ export const ThemeTogglerButton = () => {
 }
 
 const Div = styled.div`
-          width: 100px
+          
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
 
 `

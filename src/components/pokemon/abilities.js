@@ -32,19 +32,17 @@ const Abilities = ({ pokemon = [] }) => {
 const Li = styled.li`
          display: flex;
          flex-direction: row;
-         align-items: center;
 
 `
 
 const H3 = styled.h3`
          font-size: 1.5rem;
-         margin: 1rem;
          text-transform: capitalize;
 
 `
 
 const P = styled.p`
-         font-size: 1rem;
+         font-size: 1.2rem;
          margin-top: 2rem;
          text-transform: capitalize;
          text-indent: 1rem;
