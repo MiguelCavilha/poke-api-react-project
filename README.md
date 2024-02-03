@@ -1,70 +1,26 @@
-# Getting Started with Create React App
+                                      # Projeto Pokedex usando PokeApi do curso Dev Quest
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="./src/assets/images/PokedexReadme.png">                                       
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Projeto PokeApi feito com React
 
-### `npm test`
+  Este projeto foi proposto como um tipo de "Prova final" durante o curso DevQuest, lecionado por Ricardo Dias e Roberto Dias e equipe (caras incríveis). Nele foi usado todo o conhecimento
+adquirido durante o curso, usando técnicas atualizadas de HTML, CSS, JavaScript e ReactJS, testando assim o meu aprendizado durante todo o curso.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Técnicas e linguagens do projeto
 
-### `npm run build`
+   Foi utilizado dentro do ReactJS, criação de rotas React Router Dom, criação de stateless components e statefull components usando hooks como useState e useEffect, utilizei também o useContext para criar um botão que trocasse o tema da página para claro ou escuro, Axios, Styled Components dentre outras técnicas.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Desafios encontrados
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   Encontrei certa dificuldade durante a criação do porjeto para fazer a Api trazer a descrição das Abilities dos Pokemons para a tela, foi particularmente difícil esta parte, mas com uma certa paciência e trabalho em equipe com alguns colegas do curso, foi solucionado o problema, o restante foi desafiador mas divertido, o código me trouxe muito aprendizado e desafios que agregaram meus conhecimentos e me trouxeram uma nova visão da programação em si, esses conhecimentos que com certeza irei aprimorar ao longo dos meus próximos anos de estudo.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# O incrível CSS
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   Na parte de CSS busquei diversas inspirações na Web, aprimorando para o meu gosto conforme fui criando os estilos. Uma coisa a se notar é que no começo desta caminhada a estilização era um ponto fraco meu, tendo dificuldade em deixar tudo mais responsivo,
+no entanto, durante este projeto achei relaxante e divertida esta parte, visto a complexidade que o código me gerou, a estilização me pareceu brincadeira quando chegou o momento. Tive alguma dificuldade para fazer as cores de cada tipo de pokemon ser mostrada
+ao fundo dos cards, mas foi resolvido rapidamente, pricipalmente coma ajuda de colegas que fiz ao longo do curso.
