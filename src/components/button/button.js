@@ -27,4 +27,5 @@ const Img = styled.img`
 
 const Button = styled.button`
               border: none;
+              cursor: pointer;
 `

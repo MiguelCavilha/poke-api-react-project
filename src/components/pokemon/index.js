@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getPokemon } from '../../services/poke-api';
 import { Abilities } from './abilities'
 import { ThemeContext } from '../../contexts/toggler.js';
@@ -13,18 +13,15 @@ import pokedexDwImage from '../../assets/images/Pokedex-Dw.png';
 
 
 
-
 function PokemonDetails() {
 
 
 
   const [pokemon, setPokemon] = useState();
 
-
+  const navigate = useNavigate()
 
   const { name } = useParams();
-
-
 
   useEffect(() => {
     getPokemon(name)
@@ -39,8 +36,8 @@ function PokemonDetails() {
 
   return (
     <Div style={{ color: theme.color, backgroundColor: theme.background }} >
-
       <Header style={{ backgroundColor: color }}>
+      <Button onClick={() => navigate(-1)}>Back</Button>
         <Img src={pokemon.sprites.other.dream_world.front_default} alt={pokemon.name}></Img>
         <H1>#{pokemon.id} {pokemon.name}</H1>
         <H2>Type: {pokemon.types.map(type => type.type.name).join(', ')}</H2>
@@ -212,6 +209,18 @@ const P = styled.p`
           line-height: 0.1;
 
 
+`
+
+const Button = styled.button`
+          display: inline-block;
+          padding: .75rem 1.25rem;
+          border-radius: 10rem;
+          text-transform: uppercase;
+          font-size: 1rem;
+          letter-spacing: .15rem;
+          position: relative;
+          margin: 1rem;
+          cursor: pointer;
 `
 
 
