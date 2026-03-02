@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPokemonAbilities } from "../../services/poke-api";
-import { styled } from 'styled-components';
+import { styled, keyframes } from 'styled-components';
 
 
 const Abilities = ({ pokemon = [] }) => {
@@ -18,10 +18,10 @@ const Abilities = ({ pokemon = [] }) => {
   }, [ pokemon]);
 
   return (
-    <ul>
+    <ul style={{ listStyle: 'none', padding: 0 }}>
       {ability?.map((data, index) => (
         <Li key={index}>
-          <H3>{data.name}:</H3>
+          <H3>{data.name}</H3>
           <P>{data?.effect_entries.find((data) => data.language.name === "en")?.effect}</P>
         </Li>
       ))}
@@ -29,24 +29,42 @@ const Abilities = ({ pokemon = [] }) => {
   )
 }
 
-const Li = styled.li`
-         display: flex;
-         flex-direction: column;
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+`;
 
+const Li = styled.li`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin: 0.8rem 0;
+  background: rgba(79, 195, 247, 0.1);
+  border-left: 4px solid #4fc3f7;
+  border-radius: 10px;
+  animation: ${fadeIn} 0.5s ease-out;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(79, 195, 247, 0.2);
+    transform: translateX(10px);
+  }
 `
 
 const H3 = styled.h3`
-         font-size: 1.5rem;
-         text-transform: capitalize;
-
+  font-size: 1.3rem;
+  text-transform: capitalize;
+  color: #4fc3f7;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
 `
 
 const P = styled.p`
-         font-family: 'Roboto', sans-serif;
-         font-size: 1.2rem;
-         text-transform: capitalize;
-         text-indent: 1rem;
-
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  text-transform: none;
 `
 
 export { Abilities }
