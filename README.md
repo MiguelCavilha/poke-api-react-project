@@ -1,9 +1,6 @@
                                       # Projeto Pokedex usando PokeApi do curso Dev Quest
 
-<img src="./src/assets/images/PokedexReadme.png">                                       
-
-
-
+<img width="1891" height="961" alt="image" src="https://github.com/user-attachments/assets/b09ad6f7-f768-42b8-b1b7-214e931881b0" />
 
 
 # Projeto PokeApi feito com React
