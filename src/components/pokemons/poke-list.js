@@ -62,6 +62,7 @@ function PokemonList() {
       setIsSearching(false);
       setFilteredPokemons(pokemons);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm]);
 
   const totalPages = 100;
