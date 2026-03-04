@@ -28,14 +28,17 @@ function PokemonDetails() {
 
 
   const { theme } = useContext(ThemeContext);
-  const color = typeColors[pokemon?.types[0].type.name];
+  const types = pokemon?.types.map(type => type.type.name) || [];
+  const color = types.length > 1
+    ? `linear-gradient(135deg, ${typeColors[types[0]]} 0%, ${typeColors[types[1]]} 100%)`
+    : typeColors[types[0]];
 
   if (!pokemon) return <LoadingContainer><LoadingText>Loading...</LoadingText></LoadingContainer>;
 
   return (
     <Div style={{ color: theme.color, backgroundColor: theme.background }} >
       <PokedexContainer>
-        <PokedexTop style={{ background: `linear-gradient(135deg, ${color} 0%, ${color}dd 100%)` }}>
+        <PokedexTop style={{ background: color }}>
           <PokedexLid>
             <LidCircle />
             <LidLight />
@@ -47,7 +50,7 @@ function PokemonDetails() {
           <H1>#{pokemon.id} {pokemon.name}</H1>
           <TypesContainer>
             {pokemon.types.map(type => (
-              <TypeBadge key={type.type.name}>{type.type.name}</TypeBadge>
+              <TypeBadge key={type.type.name} typeColor={typeColors[type.type.name]}>{type.type.name}</TypeBadge>
             ))}
           </TypesContainer>
         </PokedexTop>
@@ -249,7 +252,7 @@ const TypesContainer = styled.div`
 
 const TypeBadge = styled.span`
   padding: 0.5rem 1.5rem;
-  background: rgba(255, 255, 255, 0.3);
+  background: ${props => props.typeColor || 'rgba(255, 255, 255, 0.3)'};
   backdrop-filter: blur(10px);
   border-radius: 25px;
   font-size: 1rem;
@@ -258,6 +261,7 @@ const TypeBadge = styled.span`
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.5);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 `;
 
 const PokedexBottom = styled.div`
