@@ -23,13 +23,16 @@ function PokemonList() {
   useEffect(() => {
     setLoading(true);
     const offset = (currentPage - 1) * pokemonsPerPage;
-    getPokemonList(1200)
+    getPokemonList(pokemonsPerPage, offset)
       .then(results => Promise.all(
-        results.slice(offset, offset + pokemonsPerPage).map(async pokemon => {
+        results.map(async pokemon => {
           const details = await getPokemon(pokemon.name);
           const sprite = await getPokemonSprite(pokemon.name);
           const types = details.types.map(type => type.type.name);
-          return { ...details, sprite, types, color: typeColors[types[0]], };
+          const color = types.length > 1 
+            ? `linear-gradient(135deg, ${typeColors[types[0]]} 0%, ${typeColors[types[1]]} 100%)`
+            : typeColors[types[0]];
+          return { ...details, sprite, types, color };
 
         })
       ))
@@ -47,17 +50,46 @@ function PokemonList() {
       setLoading(true);
       const searchLower = searchTerm.toLowerCase();
       
-      getPokemon(searchLower)
-        .then(async pokemon => {
-          const sprite = await getPokemonSprite(pokemon.name);
-          const types = pokemon.types.map(type => type.type.name);
-          setFilteredPokemons([{ ...pokemon, sprite, types, color: typeColors[types[0]] }]);
-          setLoading(false);
-        })
-        .catch(() => {
-          setFilteredPokemons([]);
-          setLoading(false);
-        });
+      if (!isNaN(searchTerm)) {
+        getPokemon(searchTerm)
+          .then(async pokemon => {
+            const sprite = await getPokemonSprite(pokemon.name);
+            const types = pokemon.types.map(type => type.type.name);
+            const color = types.length > 1 
+              ? `linear-gradient(135deg, ${typeColors[types[0]]} 0%, ${typeColors[types[1]]} 100%)`
+              : typeColors[types[0]];
+            setFilteredPokemons([{ ...pokemon, sprite, types, color }]);
+            setLoading(false);
+          })
+          .catch(() => {
+            setFilteredPokemons([]);
+            setLoading(false);
+          });
+      } else {
+        getPokemonList(1000, 0)
+          .then(results => {
+            const matches = results.filter(p => p.name.includes(searchLower));
+            return Promise.all(
+              matches.slice(0, 12).map(async pokemon => {
+                const details = await getPokemon(pokemon.name);
+                const sprite = await getPokemonSprite(pokemon.name);
+                const types = details.types.map(type => type.type.name);
+                const color = types.length > 1 
+                  ? `linear-gradient(135deg, ${typeColors[types[0]]} 0%, ${typeColors[types[1]]} 100%)`
+                  : typeColors[types[0]];
+                return { ...details, sprite, types, color };
+              })
+            );
+          })
+          .then(data => {
+            setFilteredPokemons(data);
+            setLoading(false);
+          })
+          .catch(() => {
+            setFilteredPokemons([]);
+            setLoading(false);
+          });
+      }
     } else {
       setIsSearching(false);
       setFilteredPokemons(pokemons);
@@ -104,14 +136,14 @@ function PokemonList() {
         <>
           <Ol>
             {filteredPokemons.map(({ name, sprite, types, color, id }) => (
-              <Li key={name} style={{ backgroundColor: color }}>
+              <Li key={name} style={{ background: color }}>
                 {Link ? <Link style={{ color: 'inherit', textDecoration: 'inherit' }} to={`/pokemon/${name}`}>
                   <PokemonNumber>#{id}</PokemonNumber>
                   <Img src={sprite} alt='{name}' />
                   <H2>{name}</H2>
                   <TypeContainer>
                     {types.map((type, index) => (
-                      <TypeBadge key={index}>{type}</TypeBadge>
+                      <TypeBadge key={index} typeColor={typeColors[type]}>{type}</TypeBadge>
                     ))}
                   </TypeContainer>
                 </Link> : name}
@@ -296,11 +328,14 @@ const TypeContainer = styled.div`
 
 const TypeBadge = styled.span`
   padding: 0.3rem 0.8rem;
-  background: rgba(255, 255, 255, 0.3);
+  background: ${props => props.typeColor || 'rgba(255, 255, 255, 0.3)'};
   border-radius: 15px;
   font-size: 0.85rem;
   font-weight: 600;
   backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 `;
 
 const H2 = styled.h2`

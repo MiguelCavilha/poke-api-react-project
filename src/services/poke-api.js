@@ -11,14 +11,17 @@ export async function getPokemon(name) {
 
 export async function getPokemonSprite(name) {
     const res = await pokeApi.get(`pokemon/${name}`);
-    return res.data.sprites.other.dream_world.front_default;
+    return res.data.sprites.other.dream_world.front_default || 
+           res.data.sprites.other['official-artwork'].front_default || 
+           res.data.sprites.front_default;
   }
   
 
-export async function getPokemonList(limit) {
+export async function getPokemonList(limit, offset = 0) {
     const res = await pokeApi.get('/pokemon', {
       params: {
-        limit: limit
+        limit: limit,
+        offset: offset
       }
     });
   
