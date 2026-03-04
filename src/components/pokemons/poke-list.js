@@ -11,17 +11,21 @@ function PokemonList() {
 
 
   const [pokemons, setPokemons] = useState([])
-  const [offset, setOffset] = useState(12);
-  const [limit] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredPokemons, setFilteredPokemons] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const pokemonsPerPage = 12;
 
 
 
   useEffect(() => {
-    getPokemonList(offset, limit)
+    setLoading(true);
+    const offset = (currentPage - 1) * pokemonsPerPage;
+    getPokemonList(1200)
       .then(results => Promise.all(
-        results.map(async pokemon => {
+        results.slice(offset, offset + pokemonsPerPage).map(async pokemon => {
           const details = await getPokemon(pokemon.name);
           const sprite = await getPokemonSprite(pokemon.name);
           const types = details.types.map(type => type.type.name);
@@ -29,23 +33,54 @@ function PokemonList() {
 
         })
       ))
-      .then(data => setPokemons(data));
+      .then(data => {
+        setPokemons(data);
+        setFilteredPokemons(data);
+        setLoading(false);
+      });
 
-
-
-  }, [pokemons, offset, limit]);
+  }, [currentPage]);
 
   useEffect(() => {
-    const filtered = pokemons.filter(pokemon => 
-      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pokemon.id.toString().includes(searchTerm)
-    );
-    setFilteredPokemons(filtered);
-  }, [searchTerm, pokemons]);
+    if (searchTerm) {
+      setIsSearching(true);
+      setLoading(true);
+      const searchLower = searchTerm.toLowerCase();
+      
+      getPokemon(searchLower)
+        .then(async pokemon => {
+          const sprite = await getPokemonSprite(pokemon.name);
+          const types = pokemon.types.map(type => type.type.name);
+          setFilteredPokemons([{ ...pokemon, sprite, types, color: typeColors[types[0]] }]);
+          setLoading(false);
+        })
+        .catch(() => {
+          setFilteredPokemons([]);
+          setLoading(false);
+        });
+    } else {
+      setIsSearching(false);
+      setFilteredPokemons(pokemons);
+    }
+  }, [searchTerm]);
 
-  const loadMore = () => {
-    setOffset(prev => prev + limit);
-  }
+  const totalPages = 100;
+  const maxVisiblePages = 5;
+
+  const getPageNumbers = () => {
+    const pages = [];
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
+  };
 
   const { theme } = useContext(ThemeContext);
 
@@ -62,23 +97,65 @@ function PokemonList() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </SearchContainer>
-      <Ol>
-        {filteredPokemons.map(({ name, sprite, types, color, id }) => (
-          <Li key={name} style={{ backgroundColor: color }}>
-            {Link ? <Link style={{ color: 'inherit', textDecoration: 'inherit' }} to={`/pokemon/${name}`}>
-              <PokemonNumber>#{id}</PokemonNumber>
-              <Img src={sprite} alt='{name}' />
-              <H2>{name}</H2>
-              <TypeContainer>
-                {types.map((type, index) => (
-                  <TypeBadge key={index}>{type}</TypeBadge>
-                ))}
-              </TypeContainer>
-            </Link> : name}
-          </Li>
-        ))}
-      </Ol>
-      <Button onClick={loadMore}>Load More</Button>
+      {loading ? (
+        <LoadingText>Carregando...</LoadingText>
+      ) : (
+        <>
+          <Ol>
+            {filteredPokemons.map(({ name, sprite, types, color, id }) => (
+              <Li key={name} style={{ backgroundColor: color }}>
+                {Link ? <Link style={{ color: 'inherit', textDecoration: 'inherit' }} to={`/pokemon/${name}`}>
+                  <PokemonNumber>#{id}</PokemonNumber>
+                  <Img src={sprite} alt='{name}' />
+                  <H2>{name}</H2>
+                  <TypeContainer>
+                    {types.map((type, index) => (
+                      <TypeBadge key={index}>{type}</TypeBadge>
+                    ))}
+                  </TypeContainer>
+                </Link> : name}
+              </Li>
+            ))}
+          </Ol>
+          {!isSearching && (
+            <Pagination>
+              <PageButton 
+                onClick={() => setCurrentPage(1)} 
+                disabled={currentPage === 1}
+              >
+                ««
+              </PageButton>
+              <PageButton 
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} 
+                disabled={currentPage === 1}
+              >
+                «
+              </PageButton>
+              {getPageNumbers().map(page => (
+                <PageButton
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  active={currentPage === page}
+                >
+                  {page}
+                </PageButton>
+              ))}
+              <PageButton 
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))} 
+                disabled={currentPage === totalPages}
+              >
+                »
+              </PageButton>
+              <PageButton 
+                onClick={() => setCurrentPage(totalPages)} 
+                disabled={currentPage === totalPages}
+              >
+                »»
+              </PageButton>
+            </Pagination>
+          )}
+        </>
+      )}
     </Div>
   )
 
@@ -190,6 +267,14 @@ const SearchInput = styled.input`
   &::placeholder {
     color: #999;
   }
+`;
+
+const LoadingText = styled.p`
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+  z-index: 1;
+  margin: 3rem 0;
 `;
 
 const PokemonNumber = styled.span`
@@ -315,48 +400,50 @@ const Img = styled.img`
          @media (max-width: 375px) { width: 80px; height: 80px; }
 `
 
-
-const pulse = keyframes`
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+const Pagination = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin: 3rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 1;
 `;
 
-const Button = styled.button`
-        width: 120px;
-        height: 120px;
-        display: inline-block;
-        margin: 3rem;
-        position: relative;
-        color: #fff;
-        border: 8px solid #fff;
-        border-radius: 50%;
-        background: radial-gradient(circle at 35% 35%, #ff4444 0%, #cc0000 50%, #000 100%);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
-                    inset 0 -5px 20px rgba(0, 0, 0, 0.5),
-                    inset 0 5px 20px rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        animation: ${pulse} 2s ease-in-out infinite;
-        z-index: 1;
-        font-weight: bold;
-        font-size: 0.9rem;
+const PageButton = styled.button`
+  min-width: 45px;
+  height: 45px;
+  padding: 0.5rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background: ${props => props.active ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.2)'};
+  color: ${props => props.active ? '#667eea' : 'white'};
+  font-weight: ${props => props.active ? 'bold' : 'normal'};
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: ${props => props.active ? '0 5px 15px rgba(0, 0, 0, 0.3)' : 'none'};
 
-        &:hover {
-          transform: scale(1.1);
-          box-shadow: 0 15px 40px rgba(255, 0, 0, 0.6),
-                      inset 0 -5px 20px rgba(0, 0, 0, 0.5),
-                      inset 0 5px 20px rgba(255, 255, 255, 0.4);
-        }
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
 
-        &:active {
-          transform: scale(0.95);
-        }
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 
-        @media (max-width: 460px) {
-         width: 80px;
-         height: 80px;
-         font-size: 0.75rem;
-        }
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  @media (max-width: 460px) {
+    min-width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
 `
 
 
